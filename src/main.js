@@ -27,16 +27,9 @@ console.log('#54. JavaScript homework example file')
  */
 
 // #3
-import { readFile, unlink, writeFile } from 'fs/promises'
 
 async function writeFileAsync(filename, content) {
-  try {
-    await writeFile(filename, content) // Записуємо вміст у файл
-    console.log('Файл успішно записано')
-  } catch (error) {
-    console.error('Помилка при записі файлу:', error)
-    return error // Повертаємо помилку для можливості тестування
-  }
+  // code here
 }
 
 // ! Приклад використання:
@@ -70,19 +63,7 @@ async function writeFileAsync(filename, content) {
  */
 
 async function readFileAsync(filename) {
-  try {
-    const content = await readFile(filename, 'utf8')
-    console.log('Файл успішно прочитано:', content)
-    return content // Повертаємо вміст файла
-  } catch (error) {
-    // Обробка помилки, коли файл не існує
-    if (error.code === 'ENOENT') {
-      console.error('Файл не існує:', filename)
-    } else {
-      console.error('Помилка при читанні файлу:', error)
-    }
-    return null // Повертаємо null у випадку помилки
-  }
+  // code here
 }
 
 // ! Приклад використання:
@@ -122,22 +103,12 @@ async function readFileAsync(filename) {
  */
 
 async function deleteFileAsync(filename) {
-  try {
-    await unlink(filename)
-    console.log('Файл успішно видалено')
-  } catch (error) {
-    // Обробка помилки, якщо файл не існує
-    if (error.code === 'ENOENT') {
-      console.error('Файл не існує:', filename)
-    } else {
-      console.error('Помилка при видаленні файлу:', error)
-    }
-  }
+  // code here
 }
 
-// Приклад використання:
-writeFileAsync('example.txt', 'Привіт, це тестовий файл!').then(() => {
-  deleteFileAsync('example.txt')
-})
+// ! Приклад використання:
+// writeFileAsync('example.txt', 'Привіт, це тестовий файл!').then(() => {
+//   deleteFileAsync('example.txt')
+// })
 
 export { writeFileAsync, readFileAsync, deleteFileAsync }
