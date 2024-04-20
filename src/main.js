@@ -40,7 +40,7 @@ async function writeFileAsync(filename, content) {
 }
 
 // ! Приклад використання:
-// writeFileAsync('example.txt', 'Привіт, це тестовий файл!')
+writeFileAsync('example.txt', 'Привіт, це тестовий файл!')
 
 /*
  *
@@ -86,13 +86,13 @@ async function readFileAsync(filename) {
 }
 
 // ! Приклад використання:
-// readFileAsync('example.txt')
-//   .then((content) => {
-//     console.log('Прочитаний вміст:', content)
-//   })
-//   .catch((error) => {
-//     console.error('Помилка:', error)
-//   })
+readFileAsync('example.txt')
+  .then((content) => {
+    console.log('Прочитаний вміст:', content)
+  })
+  .catch((error) => {
+    console.error('Помилка:', error)
+  })
 
 /*
  *
