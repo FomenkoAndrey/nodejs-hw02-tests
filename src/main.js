@@ -26,8 +26,6 @@ console.log('#54. JavaScript homework example file')
  *
  */
 
-// #3
-
 async function writeFileAsync(filename, content) {
   // code here
 }
