@@ -26,7 +26,6 @@ console.log('#54. JavaScript homework example file')
  *
  */
 
-// #3
 import { readFile, unlink, writeFile } from 'fs/promises'
 
 async function writeFileAsync(filename, content) {
