@@ -1,24 +1,28 @@
-import { unlink } from 'fs/promises'
-import { deleteFileAsync } from '../main.js'
+import { expect, describe, it, beforeEach, vi } from 'vitest'
+import * as fs from 'fs/promises'
 
-// Мокуємо fs/promises
-jest.mock('fs/promises', () => ({
-  unlink: jest.fn()
-}))
+// Мокуємо fs/promises перед імпортом основного модуля
+vi.mock('fs/promises')
+
+// Імпортуємо функцію після моку
+import { deleteFileAsync } from '../main.js'
 
 describe('deleteFileAsync', () => {
   beforeEach(() => {
-    jest.clearAllMocks() // Очищення моків перед кожним тестом
-    global.console = { log: jest.fn(), error: jest.fn() } // Мокуємо глобальний console
+    vi.clearAllMocks()
+    vi.spyOn(console, 'log').mockImplementation(() => {})
+    vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
   it('успішно видаляє файл', async () => {
     const filename = 'existingFile.txt'
-    unlink.mockResolvedValue()
+    
+    // Встановлюємо мок напряму для fs.unlink
+    fs.unlink.mockResolvedValue(undefined)
 
     await deleteFileAsync(filename)
 
-    expect(unlink).toHaveBeenCalledWith(filename)
+    expect(fs.unlink).toHaveBeenCalledWith(filename)
     expect(console.log).toHaveBeenCalledWith('Файл успішно видалено')
   })
 
@@ -26,22 +30,26 @@ describe('deleteFileAsync', () => {
     const filename = 'nonexistentFile.txt'
     const error = new Error('Файл не існує')
     error.code = 'ENOENT'
-    unlink.mockRejectedValue(error)
+    
+    // Встановлюємо мок для відхилення promise
+    fs.unlink.mockRejectedValue(error)
 
     await deleteFileAsync(filename)
 
-    expect(unlink).toHaveBeenCalledWith(filename)
+    expect(fs.unlink).toHaveBeenCalledWith(filename)
     expect(console.error).toHaveBeenCalledWith('Файл не існує:', filename)
   })
 
   it('виводить помилку при інших помилках видалення', async () => {
     const filename = 'problematicFile.txt'
     const error = new Error('Помилка при видаленні')
-    unlink.mockRejectedValue(error)
+    
+    // Встановлюємо мок для відхилення promise
+    fs.unlink.mockRejectedValue(error)
 
     await deleteFileAsync(filename)
 
-    expect(unlink).toHaveBeenCalledWith(filename)
+    expect(fs.unlink).toHaveBeenCalledWith(filename)
     expect(console.error).toHaveBeenCalledWith('Помилка при видаленні файлу:', error)
   })
 })
